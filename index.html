@@ -3,168 +3,680 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>¡Próximamente!</title>
+  <title>ClerDevs Code</title>
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: white;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Fondo dinámico */
+    #dynamic-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: linear-gradient(-45deg, #121212, #1a1a2e, #16213e, #0f3460);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(30, 30, 30, 0.6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      z-index: 999;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      font-size: 1.8em;
+      color: #00fff0;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: white;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #00fff0;
+      left: 0;
+      bottom: -4px;
+      transition: 0.4s;
+    }
+
+    .nav-links li a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links li a:hover {
+      color: #00fff0;
+    }
+
+    .burger {
+      display: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: white;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       text-align: center;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .hero h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: 2px;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: .15em solid #00fff0;
+      animation: typing 3s steps(30, end), blink-caret .75s step-end infinite;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      color: #ccc;
+      margin-top: 20px;
+      max-width: 700px;
+      animation: fadeIn 4s ease-in;
+    }
+
+    .btn {
+      margin-top: 40px;
+      padding: 15px 30px;
+      background-color: transparent;
+      border: 2px solid #00fff0;
+      color: #00fff0;
+      font-size: 1em;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background-color: #00fff0;
+      color: #121212;
+      transform: scale(1.05);
+    }
+
+    /* Values Section */
+    .values {
+      background: rgba(30, 30, 30, 0.7);
+      backdrop-filter: blur(5px);
+      padding: 80px 0;
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+      font-size: 2.5rem;
+      color: #00fff0;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: #00fff0;
+      margin: 15px auto;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .value-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 40px 30px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid rgba(0, 255, 240, 0.1);
+    }
+
+    .value-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 255, 240, 0.1);
+      border-color: rgba(0, 255, 240, 0.3);
+    }
+
+    .value-icon {
+      font-size: 3.5rem;
+      color: #00fff0;
+      margin-bottom: 25px;
+      transition: transform 0.5s;
+    }
+
+    .value-card:hover .value-icon {
+      transform: rotateY(180deg);
+    }
+
+    .value-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    .value-card p {
+      color: #aaa;
+      line-height: 1.6;
+    }
+
+    /* Services Section */
+    .services {
+      padding: 100px 0;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #00fff0, #0084ff);
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: -1;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 255, 240, 0.2);
+    }
+
+    .service-card:hover::before {
+      opacity: 0.1;
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      color: #00fff0;
+      margin-bottom: 20px;
+    }
+
+    .service-content {
+      padding: 30px;
+    }
+
+    .service-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    .service-card p {
+      color: #aaa;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    /* CTA Section */
+    .cta {
+      background: linear-gradient(135deg, rgba(0, 255, 240, 0.1), rgba(0, 100, 255, 0.1));
+      padding: 100px 0;
+      text-align: center;
+      position: relative;
       overflow: hidden;
     }
 
-    h1 {
-      font-size: 3em;
-      animation: fadeInDown 1.5s ease-out;
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0, 255, 240, 0.05) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+      z-index: -1;
     }
 
-    p {
-      font-size: 1.2em;
-      max-width: 600px;
-      margin: 20px;
-      animation: fadeInUp 2s ease-out;
+    .cta h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: #fff;
     }
 
-    .loader {
-      margin-top: 30px;
-      display: flex;
-      gap: 10px;
+    .cta p {
+      color: #ccc;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      font-size: 1.1rem;
+      line-height: 1.6;
     }
 
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: white;
-      animation: bounce 1s infinite alternate;
+    .cta .btn {
+      font-size: 1.1rem;
+      padding: 15px 40px;
     }
-
-    .dot:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-
-    .dot:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-
-    @keyframes bounce {
-      to {
-        transform: translateY(-15px);
-        opacity: 0.5;
-      }
-    }
-
-    @keyframes fadeInDown {
-      from {
-        transform: translateY(-20px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    @keyframes fadeInUp {
-      from {
-        transform: translateY(20px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-.button {
-  height: 50px;
-  width: 150px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.5s ease-in-out;
-}
-
-.button:hover {
-  box-shadow: .5px .5px 150px #252525;
-}
-
-.type1::after {
-  content: "✉";
-  height: 50px;
-  width: 150px;
-  background-color: #008080;
-  color: #fff;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  transform: translateY(50px);
-  font-size: 1.2rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.5s ease-in-out;
-}
-
-.type1::before {
-  content: "Contáctanos";
-  height: 50px;
-  width: 150px;
-  background-color: #fff;
-  color: #008080;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  transform: translateY(0px) scale(1.2);
-  font-size: 1.2rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.5s ease-in-out;
-}
-
-.type1:hover::after {
-  transform: translateY(0) scale(1.2);
-}
-
-.type1:hover::before {
-  transform: translateY(-50px) scale(0) rotate(120deg);
-}
 
     footer {
-      position: absolute;
-      bottom: 10px;
+      background: #1a1a1a;
+      padding: 30px;
+      text-align: center;
       font-size: 0.9em;
-      color: #ccc;
+      color: #aaa;
+    }
+
+    /* Animations */
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #00fff0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: rgba(18, 18, 18, 0.95);
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        width: 200px;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .nav-links.active {
+        transform: translateX(0);
+      }
+
+      .burger {
+        display: block;
+      }
+      
+      .hero h2 {
+        white-space: normal;
+        border-right: none;
+        animation: none;
+      }
+      
+      .values-grid, .services-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>¡Nuestro sitio está en construcción!</h1>
-  <p>Estamos preparando algo increíble para ti. Pronto podrás explorar nuestros productos únicos directamente desde esta página.</p>
+  <div id="dynamic-bg"></div>
+  <div id="particles-js"></div>
 
-  <div class="loader">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-  </div>
+  <header class="navbar">
+    <div class="logo">ClerDevs <span>Code</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#valores">Valores</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <div class="burger">&#9776;</div>
+    </nav>
+  </header>
 
-  <a href="mailto:victormontano.j@gmail.com?subject=Interesado%20en%20tus%20productos&body=Hola,%20me%20interesa%20saber%20más%20sobre%20lo%20que%20ofreces." style="text-decoration: none;">
-  <div class="button type1"></div>
-</a>
+  <section id="inicio" class="hero">
+    <div class="container">
+      <h2>Transformamos ideas en código</h2>
+      <p>En ClerDevs Code combinamos innovación y tecnología para crear soluciones digitales que impulsan tu negocio hacia el futuro.</p>
+      <a href="#contacto" class="btn">Contáctanos</a>
+    </div>
+  </section>
 
+  <section id="valores" class="values">
+    <div class="container">
+      <h2 class="section-title">Nuestros Valores</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3>Innovación</h3>
+          <p>Nos mantenemos a la vanguardia tecnológica, implementando las últimas tendencias y metodologías para ofrecer soluciones creativas y efectivas.</p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h3>Transparencia</h3>
+          <p>Creemos en la comunicación clara y honesta. Mantenemos a nuestros clientes informados en cada etapa del proceso de desarrollo.</p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h3>Excelencia</h3>
+          <p>Nos comprometemos con la más alta calidad en cada proyecto, asegurando código limpio, eficiente y mantenible.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <footer>&copy; 2025 ClerDevs Code. Todos los derechos reservados.</footer>
+  <section id="servicios" class="services">
+    <div class="container">
+      <h2 class="section-title">¿Qué hacemos?</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-content">
+            <div class="service-icon">
+              <i class="fas fa-globe"></i>
+            </div>
+            <h3>Desarrollo Web</h3>
+            <p>Creación de sitios web modernos, responsivos y optimizados para SEO que representan perfectamente tu marca en internet.</p>
+            <a href="#contacto" class="btn">Saber más</a>
+          </div>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-content">
+            <div class="service-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Aplicaciones Móviles</h3>
+            <p>Desarrollo de aplicaciones nativas e híbridas para iOS y Android, diseñadas para ofrecer la mejor experiencia de usuario.</p>
+            <a href="#contacto" class="btn">Saber más</a>
+          </div>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-content">
+            <div class="service-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Soluciones Empresariales</h3>
+            <p>Sistemas personalizados que automatizan procesos, mejoran la productividad y generan insights valiosos para tu negocio.</p>
+            <a href="#contacto" class="btn">Saber más</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contacto">
+    <div class="container">
+      <h2>¿Listo para comenzar tu proyecto?</h2>
+      <p>En ClerDevs Code estamos preparados para convertir tus ideas en realidad. Contáctanos hoy mismo y descubre cómo podemos ayudarte a alcanzar tus objetivos digitales.</p>
+      <a href="#contacto" class="btn">Hablemos</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 ClerDevs Code. Todos los derechos reservados.</p>
+      <div style="margin-top: 20px;">
+        <a href="#" style="color: #00fff0; margin: 0 10px;"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" style="color: #00fff0; margin: 0 10px;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="color: #00fff0; margin: 0 10px;"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" style="color: #00fff0; margin: 0 10px;"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    tsParticles.load("particles-js", {
+      background: {
+        color: {
+          value: "#121212"
+        }
+      },
+      particles: {
+        color: {
+          value: "#00fff0"
+        },
+        links: {
+          enable: true,
+          distance: 150,
+          color: "#00fff0",
+          opacity: 0.4
+        },
+        move: {
+          enable: true,
+          speed: 1
+        },
+        number: {
+          value: 60
+        },
+        size: {
+          value: 3
+        }
+      }
+    });
+
+    const burger = document.querySelector('.burger');
+    const navLinks = document.querySelector('.nav-links');
+
+    burger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Cerrar menú al hacer clic en un enlace
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Efecto de aparición al hacer scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.value-card, .service-card').forEach(card => {
+      observer.observe(card);
+    });
+
+    tsParticles.load("particles-js", {
+      background: {
+        color: {
+          value: "transparent"
+        }
+      },
+      interactivity: {
+        events: {
+          onClick: {
+            enable: true,
+            mode: "push"
+          },
+          onHover: {
+            enable: true,
+            mode: "repulse"
+          }
+        },
+        modes: {
+          push: {
+            quantity: 4
+          },
+          repulse: {
+            distance: 100,
+            duration: 0.4
+          }
+        }
+      },
+      particles: {
+        color: {
+          value: "#00fff0"
+        },
+        links: {
+          color: "#00fff0",
+          distance: 150,
+          enable: true,
+          opacity: 0.4,
+          width: 1
+        },
+        collisions: {
+          enable: true
+        },
+        move: {
+          direction: "none",
+          enable: true,
+          outModes: {
+            default: "bounce"
+          },
+          random: true,
+          speed: 2,
+          straight: false,
+          attract: {
+            enable: true,
+            rotateX: 600,
+            rotateY: 1200
+          }
+        },
+        number: {
+          density: {
+            enable: true,
+            area: 800
+          },
+          value: 80
+        },
+        opacity: {
+          value: 0.5,
+          animation: {
+            enable: true,
+            speed: 1,
+            minimumValue: 0.1
+          }
+        },
+        shape: {
+          type: "circle"
+        },
+        size: {
+          value: { min: 1, max: 3 },
+          animation: {
+            enable: true,
+            speed: 4,
+            minimumValue: 0.1
+          }
+        }
+      },
+      detectRetina: true
+    });
+  </script>
 </body>
 </html>
+
+<!-- ------------------------------------------------------------------------------------------------- -->
