@@ -1,686 +1,297 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ClerDevs Code</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClerDevs Code | Desarrollo Web Profesional</title>
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body, html {
-      height: 100%;
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
-
-    /* Fondo dinámico */
-    #dynamic-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      background: linear-gradient(-45deg, #121212, #1a1a2e, #16213e, #0f3460);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-    }
-
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    #particles-js {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    .navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      backdrop-filter: blur(10px);
-      background-color: rgba(30, 30, 30, 0.6);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 40px;
-      z-index: 999;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-    }
-
-    .logo {
-      font-size: 1.8em;
-      color: #00fff0;
-      font-weight: bold;
-    }
-
-    .logo span {
-      color: white;
-    }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 30px;
-    }
-
-    .nav-links li a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      position: relative;
-      transition: color 0.3s;
-    }
-
-    .nav-links li a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      background: #00fff0;
-      left: 0;
-      bottom: -4px;
-      transition: 0.4s;
-    }
-
-    .nav-links li a:hover::after {
-      width: 100%;
-    }
-
-    .nav-links li a:hover {
-      color: #00fff0;
-    }
-
-    .burger {
-      display: none;
-      font-size: 2rem;
-      cursor: pointer;
-      color: white;
-    }
-
-    #particles-js {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    section {
-      padding: 80px 0;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* Hero Section */
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 20px;
-      position: relative;
-    }
-
-    .hero h2 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      letter-spacing: 2px;
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: .15em solid #00fff0;
-      animation: typing 3s steps(30, end), blink-caret .75s step-end infinite;
-    }
-
-    .hero p {
-      font-size: 1.2em;
-      color: #ccc;
-      margin-top: 20px;
-      max-width: 700px;
-      animation: fadeIn 4s ease-in;
-    }
-
-    .btn {
-      margin-top: 40px;
-      padding: 15px 30px;
-      background-color: transparent;
-      border: 2px solid #00fff0;
-      color: #00fff0;
-      font-size: 1em;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .btn:hover {
-      background-color: #00fff0;
-      color: #121212;
-      transform: scale(1.05);
-    }
-
-    /* Values Section */
-    .values {
-      background: rgba(30, 30, 30, 0.7);
-      backdrop-filter: blur(5px);
-      padding: 80px 0;
-      position: relative;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 60px;
-      font-size: 2.5rem;
-      color: #00fff0;
-      position: relative;
-    }
-
-    .section-title::after {
-      content: '';
-      display: block;
-      width: 80px;
-      height: 3px;
-      background: #00fff0;
-      margin: 15px auto;
-    }
-
-    .values-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 40px;
-      margin-top: 50px;
-    }
-
-    .value-card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      padding: 40px 30px;
-      text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
-      border: 1px solid rgba(0, 255, 240, 0.1);
-    }
-
-    .value-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 255, 240, 0.1);
-      border-color: rgba(0, 255, 240, 0.3);
-    }
-
-    .value-icon {
-      font-size: 3.5rem;
-      color: #00fff0;
-      margin-bottom: 25px;
-      transition: transform 0.5s;
-    }
-
-    .value-card:hover .value-icon {
-      transform: rotateY(180deg);
-    }
-
-    .value-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 15px;
-      color: #fff;
-    }
-
-    .value-card p {
-      color: #aaa;
-      line-height: 1.6;
-    }
-
-    /* Services Section */
-    .services {
-      padding: 100px 0;
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-
-    .service-card {
-      background: rgba(30, 30, 30, 0.8);
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
-      z-index: 1;
-    }
-
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, #00fff0, #0084ff);
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: -1;
-    }
-
-    .service-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 255, 240, 0.2);
-    }
-
-    .service-card:hover::before {
-      opacity: 0.1;
-    }
-
-    .service-icon {
-      font-size: 2.5rem;
-      color: #00fff0;
-      margin-bottom: 20px;
-    }
-
-    .service-content {
-      padding: 30px;
-    }
-
-    .service-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 15px;
-      color: #fff;
-    }
-
-    .service-card p {
-      color: #aaa;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
-    /* CTA Section */
-    .cta {
-      background: linear-gradient(135deg, rgba(0, 255, 240, 0.1), rgba(0, 100, 255, 0.1));
-      padding: 100px 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(0, 255, 240, 0.05) 0%, transparent 70%);
-      animation: rotate 20s linear infinite;
-      z-index: -1;
-    }
-
-    .cta h2 {
-      font-size: 2.5rem;
-      margin-bottom: 30px;
-      color: #fff;
-    }
-
-    .cta p {
-      color: #ccc;
-      max-width: 700px;
-      margin: 0 auto 40px;
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    .cta .btn {
-      font-size: 1.1rem;
-      padding: 15px 40px;
-    }
-
-    footer {
-      background: #1a1a1a;
-      padding: 30px;
-      text-align: center;
-      font-size: 0.9em;
-      color: #aaa;
-    }
-
-    /* Animations */
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: #00fff0; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .nav-links {
-        position: absolute;
-        top: 70px;
-        right: 0;
-        background: rgba(18, 18, 18, 0.95);
-        flex-direction: column;
-        gap: 20px;
-        padding: 20px;
-        width: 200px;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-      }
-
-      .nav-links.active {
-        transform: translateX(0);
-      }
-
-      .burger {
-        display: block;
-      }
-      
-      .hero h2 {
-        white-space: normal;
-        border-right: none;
-        animation: none;
-      }
-      
-      .values-grid, .services-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"> 
+  <script src="animaciones.js"></script>
+  
 </head>
 <body>
-  <div id="dynamic-bg"></div>
-  <div id="particles-js"></div>
-
-  <header class="navbar">
-    <div class="logo">
-  <img src="3.png" alt="ClerDevs Code Logo" style="height: 40px;">
-  <span style="display: none;">ClerDevs Code</span>
+  <!-- Fondo de partículas -->
+  <!-- Reemplaza el div de partículas por este nuevo fondo -->
+<div id="dynamic-background">
+  <div class="gradient-bg"></div>
+  <div class="particles-js"></div>
 </div>
 
-    <nav>
+  <!-- Barra de navegación -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <div class="logo, container nav-container">
+      <img src="3.png" alt="ClerDevs Code Logo" style="height: 40px;">
+      <span style="display: none;">ClerDevs Code</span>
+</div>
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
       <ul class="nav-links">
         <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#valores">Valores</a></li>
         <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
-      <div class="burger">&#9776;</div>
-    </nav>
-  </header>
+    </div>
+  </nav>
 
+  <!-- Sección Hero -->
   <section id="inicio" class="hero">
     <div class="container">
-      <h2>Transformamos ideas en código</h2>
-      <p>En ClerDevs Code combinamos innovación y tecnología para crear soluciones digitales que impulsan tu negocio hacia el futuro.</p>
-      <a href="#contacto" class="btn">Contáctanos</a>
+      <div class="hero-content animate">
+        <h1 class="hero-title">Transformamos tus ideas <span> en código</span></h1>
+        <p class="hero-subtitle">En ClerDevs Code combinamos innovación y tecnología para crear soluciones digitales que impulsan tu negocio hacia el futuro.</p>
+        <div class="btn-group" style="display: flex; gap: var(--spacing-sm);">
+          <a href="#contacto" class="btn btn-primary">Comencemos</a>
+          <a href="#servicios" class="btn btn-outline">Nuestros servicios</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="valores" class="values">
+  <!-- Sección Servicios -->
+  <section id="servicios" class="section-alt">
     <div class="container">
-      <h2 class="section-title">Nuestros Valores</h2>
-      <div class="values-grid">
-        <div class="value-card">
-          <div class="value-icon">
-            <i class="fas fa-lightbulb"></i>
+      <div class="section-header animate">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <p class="section-subtitle">Ofrecemos soluciones tecnológicas completas para llevar tu presencia digital al siguiente nivel.</p>
+      </div>
+      
+      <div class="grid grid-3">
+        <div class="card animate delay-1">
+          <div class="card-icon">
+            <i class="fas fa-laptop-code"></i>
           </div>
-          <h3>Innovación</h3>
-          <p>Nos mantenemos a la vanguardia tecnológica, implementando las últimas tendencias y metodologías para ofrecer soluciones creativas y efectivas.</p>
+          <h3 class="card-title">Desarrollo Web</h3>
+          <p>Sitios web modernos, rápidos y optimizados para SEO con las últimas tecnologías como React, Vue.js y Node.js.</p>
+          <ul style="margin-top: var(--spacing-sm); padding-left: 20px; color: var(--light-gray);">
+            <li style="margin-bottom: var(--spacing-xs);">Landing pages efectivas</li>
+            <li style="margin-bottom: var(--spacing-xs);">Tiendas e-commerce</li>
+            <li style="margin-bottom: var(--spacing-xs);">Aplicaciones web complejas</li>
+          </ul>
         </div>
         
-        <div class="value-card">
-          <div class="value-icon">
-            <i class="fas fa-handshake"></i>
+        <div class="card animate delay-2">
+          <div class="card-icon">
+            <i class="fas fa-mobile-alt"></i>
           </div>
-          <h3>Transparencia</h3>
-          <p>Creemos en la comunicación clara y honesta. Mantenemos a nuestros clientes informados en cada etapa del proceso de desarrollo.</p>
+          <h3 class="card-title">Aplicaciones Móviles</h3>
+          <p>Desarrollamos apps nativas e híbridas para iOS y Android con excelente experiencia de usuario y rendimiento.</p>
+          <ul style="margin-top: var(--spacing-sm); padding-left: 20px; color: var(--light-gray);">
+            <li style="margin-bottom: var(--spacing-xs);">React Native</li>
+            <li style="margin-bottom: var(--spacing-xs);">Flutter</li>
+            <li style="margin-bottom: var(--spacing-xs);">Swift/Kotlin nativo</li>
+          </ul>
         </div>
         
-        <div class="value-card">
-          <div class="value-icon">
+        <div class="card animate delay-3">
+          <div class="card-icon">
+            <i class="fas fa-server"></i>
+          </div>
+          <h3 class="card-title">Backend & API</h3>
+          <p>Sistemas robustos y escalables con arquitectura limpia y mantenible para soportar tus operaciones críticas.</p>
+          <ul style="margin-top: var(--spacing-sm); padding-left: 20px; color: var(--light-gray);">
+            <li style="margin-bottom: var(--spacing-xs);">Node.js / Python</li>
+            <li style="margin-bottom: var(--spacing-xs);">Bases de datos SQL/NoSQL</li>
+            <li style="margin-bottom: var(--spacing-xs);">Microservicios</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Nosotros -->
+  <section id="nosotros">
+    <div class="container">
+      <div class="section-header animate">
+        <h2 class="section-title">Sobre Nosotros</h2>
+        <p class="section-subtitle">Conoce al equipo detrás de ClerDevs y nuestra filosofía de trabajo.</p>
+      </div>
+      
+      <div class="grid grid-3">
+        <div class="card animate delay-1">
+          <div class="card-icon">
             <i class="fas fa-rocket"></i>
           </div>
-          <h3>Excelencia</h3>
-          <p>Nos comprometemos con la más alta calidad en cada proyecto, asegurando código limpio, eficiente y mantenible.</p>
+          <h3 class="card-title">Nuestra Misión</h3>
+          <p>Crear soluciones tecnológicas que resuelvan problemas reales con código limpio, eficiente y mantenible, ayudando a nuestros clientes a alcanzar sus objetivos digitales.</p>
+        </div>
+        
+        <div class="card animate delay-2">
+          <div class="card-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h3 class="card-title">Nuestra Visión</h3>
+          <p>Ser reconocidos como líderes en desarrollo de software innovador en Latinoamérica para 2025, manteniendo siempre nuestros valores de transparencia y excelencia técnica.</p>
+        </div>
+        
+        <div class="card animate delay-3">
+          <div class="card-icon">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3 class="card-title">Nuestros Valores</h3>
+          <p><strong>Calidad:</strong> Código limpio y bien estructurado<br>
+             <strong>Transparencia:</strong> Comunicación clara y honesta<br>
+             <strong>Innovación:</strong> Siempre aprendiendo y mejorando</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="servicios" class="services">
+  <!-- Sección Proyectos -->
+  <section id="proyectos" class="section-alt">
     <div class="container">
-      <h2 class="section-title">¿Qué hacemos?</h2>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-content">
-            <div class="service-icon">
-              <i class="fas fa-globe"></i>
-            </div>
-            <h3>Desarrollo Web</h3>
-            <p>Creación de sitios web modernos, responsivos y optimizados para SEO que representan perfectamente tu marca en internet.</p>
-            <a href="#contacto" class="btn">Saber más</a>
+      <div class="section-header animate">
+        <h2 class="section-title">Proyectos Destacados</h2>
+        <p class="section-subtitle">Algunos de nuestros trabajos recientes que nos enorgullecen.</p>
+      </div>
+      
+      <div class="grid grid-3">
+        <div class="card animate delay-1">
+          <div style="height: 200px; background: linear-gradient(135deg, #00fff0, #0084ff); border-radius: var(--border-radius); margin-bottom: var(--spacing-sm); display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-shopping-cart" style="font-size: 4rem; color: white;"></i>
+          </div>
+          <h3 class="card-title">Tienda Online</h3>
+          <p>Plataforma e-commerce con más de 10,000 productos, sistema de pago integrado y panel de administración completo.</p>
+          <div style="margin-top: var(--spacing-sm);">
+            <span style="display: inline-block; background: rgba(0, 255, 240, 0.1); color: var(--primary); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px;">React</span>
+            <span style="display: inline-block; background: rgba(0, 255, 240, 0.1); color: var(--primary); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px;">Node.js</span>
+            <span style="display: inline-block; background: rgba(0, 255, 240, 0.1); color: var(--primary); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px;">MongoDB</span>
           </div>
         </div>
         
-        <div class="service-card">
-          <div class="service-content">
-            <div class="service-icon">
-              <i class="fas fa-mobile-alt"></i>
-            </div>
-            <h3>Aplicaciones Móviles</h3>
-            <p>Desarrollo de aplicaciones nativas e híbridas para iOS y Android, diseñadas para ofrecer la mejor experiencia de usuario.</p>
-            <a href="#contacto" class="btn">Saber más</a>
+        <div class="card animate delay-2">
+          <div style="height: 200px; background: linear-gradient(135deg, #ff00aa, #ff7700); border-radius: var(--border-radius); margin-bottom: var(--spacing-sm); display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-mobile-alt" style="font-size: 4rem; color: white;"></i>
+          </div>
+          <h3 class="card-title">App de Fitness</h3>
+          <p>Aplicación móvil con rutinas personalizadas, seguimiento de progreso y integración con wearables.</p>
+          <div style="margin-top: var(--spacing-sm);">
+            <span style="display: inline-block; background: rgba(0, 255, 240, 0.1); color: var(--primary); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px;">Flutter</span>
+            <span style="display: inline-block; background: rgba(0, 255, 240, 0.1); color: var(--primary); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px;">Firebase</span>
           </div>
         </div>
         
-        <div class="service-card">
-          <div class="service-content">
-            <div class="service-icon">
-              <i class="fas fa-chart-line"></i>
-            </div>
-            <h3>Soluciones Empresariales</h3>
-            <p>Sistemas personalizados que automatizan procesos, mejoran la productividad y generan insights valiosos para tu negocio.</p>
-            <a href="#contacto" class="btn">Saber más</a>
+        <div class="card animate delay-3">
+          <div style="height: 200px; background: linear-gradient(135deg, #7700ff, #00aaff); border-radius: var(--border-radius); margin-bottom: var(--spacing-sm); display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-chart-line" style="font-size: 4rem; color: white;"></i>
+          </div>
+          <h3 class="card-title">Sistema de Analytics</h3>
+          <p>Plataforma de análisis de datos en tiempo real con dashboards personalizables y reportes automatizados.</p>
+          <div style="margin-top: var(--spacing-sm);">
+            <span style="display: inline-block; background: rgba(0, 255, 240, 0.1); color: var(--primary); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px;">Python</span>
+            <span style="display: inline-block; background: rgba(0, 255, 240, 0.1); color: var(--primary); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px;">Django</span>
+            <span style="display: inline-block; background: rgba(0, 255, 240, 0.1); color: var(--primary); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px;">PostgreSQL</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="cta" id="contacto">
+  <!-- Sección Contacto -->
+  <section id="contacto">
     <div class="container">
-      <h2>¿Listo para comenzar tu proyecto?</h2>
-      <p>En ClerDevs Code estamos preparados para convertir tus ideas en realidad. Contáctanos hoy mismo y descubre cómo podemos ayudarte a alcanzar tus objetivos digitales.</p>
-      <a href="#contacto" class="btn">Hablemos</a>
+      <div class="section-header animate">
+        <h2 class="section-title">Contáctanos</h2>
+        <p class="section-subtitle">¿Listo para comenzar tu proyecto? Escríbenos y te responderemos en menos de 24 horas.</p>
+      </div>
+      
+      <div class="contact-form animate delay-1">
+        <form>
+          <div class="form-group">
+  <label for="name" class="form-label">Nombre</label>
+  <div class="floating-placeholder">
+    <input type="text" id="name" class="form-control" placeholder="" required>
+    <span class="placeholder-text">Tu nombre</span>
+  </div>
+</div>
+
+
+<div class="form-group">
+  <label for="email" class="form-label">Email</label>
+  <div class="floating-placeholder">
+    <input type="text" id="email" class="form-control" placeholder="" required>
+    <span class="placeholder-text">Tu correo electronico</span>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="asunto" class="form-label">Asunto</label>
+  <div class="floating-placeholder">
+    <input type="text" id="asunto" class="form-control" placeholder="" required>
+    <span class="placeholder-text">Una breve explicación</span>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="mensaje" class="form-label">Mensaje</label>
+  <div class="floating-placeholder">
+    <input type="text" id="mensaje" class="form-control" placeholder="" required>
+    <span class="placeholder-text">¡Cuentanos más!</span>
+  </div>
+</div>
+
+          
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar Mensaje</button>
+        </form>
+      </div>
     </div>
   </section>
 
+  <!-- Footer -->
+   
   <footer>
+    
     <div class="container">
-      <p>&copy; 2025 ClerDevs Code. Todos los derechos reservados.</p>
-      <div style="margin-top: 20px;">
-        <a href="#" style="color: #00fff0; margin: 0 10px;"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" style="color: #00fff0; margin: 0 10px;"><i class="fab fa-twitter"></i></a>
-        <a href="#" style="color: #00fff0; margin: 0 10px;"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" style="color: #00fff0; margin: 0 10px;"><i class="fab fa-github"></i></a>
+      <div class="footer-content">
+        <div class="footer-about">
+          <div class="footer-logo">
+            <i class="fas fa-code"></i> ClerDevs
+          </div>
+          <p>Cuando una idea nace, el mundo escucha un "hola".</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <h3>Enlaces</h3>
+          <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-contact">
+          <h3>Contacto</h3>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>victor.montanoj@gmail.com</span>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <span>+52 1 33 2715 0980</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2025 ClerDevs Code. Todos los derechos reservados.</p>
       </div>
     </div>
   </footer>
-
-  <script>
-    tsParticles.load("particles-js", {
-      background: {
-        color: {
-          value: "#121212"
-        }
-      },
-      particles: {
-        color: {
-          value: "#00fff0"
-        },
-        links: {
-          enable: true,
-          distance: 150,
-          color: "#00fff0",
-          opacity: 0.4
-        },
-        move: {
-          enable: true,
-          speed: 1
-        },
-        number: {
-          value: 60
-        },
-        size: {
-          value: 3
-        }
-      }
-    });
-
-    const burger = document.querySelector('.burger');
-    const navLinks = document.querySelector('.nav-links');
-
-    burger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
-
-    // Cerrar menú al hacer clic en un enlace
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-      });
-    });
-
-    // Efecto de aparición al hacer scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-        }
-      });
-    }, {
-      threshold: 0.1
-    });
-
-    document.querySelectorAll('.value-card, .service-card').forEach(card => {
-      observer.observe(card);
-    });
-
-    tsParticles.load("particles-js", {
-      background: {
-        color: {
-          value: "transparent"
-        }
-      },
-      interactivity: {
-        events: {
-          onClick: {
-            enable: true,
-            mode: "push"
-          },
-          onHover: {
-            enable: true,
-            mode: "repulse"
-          }
-        },
-        modes: {
-          push: {
-            quantity: 4
-          },
-          repulse: {
-            distance: 100,
-            duration: 0.4
-          }
-        }
-      },
-      particles: {
-        color: {
-          value: "#00fff0"
-        },
-        links: {
-          color: "#00fff0",
-          distance: 150,
-          enable: true,
-          opacity: 0.4,
-          width: 1
-        },
-        collisions: {
-          enable: true
-        },
-        move: {
-          direction: "none",
-          enable: true,
-          outModes: {
-            default: "bounce"
-          },
-          random: true,
-          speed: 2,
-          straight: false,
-          attract: {
-            enable: true,
-            rotateX: 600,
-            rotateY: 1200
-          }
-        },
-        number: {
-          density: {
-            enable: true,
-            area: 800
-          },
-          value: 80
-        },
-        opacity: {
-          value: 0.5,
-          animation: {
-            enable: true,
-            speed: 1,
-            minimumValue: 0.1
-          }
-        },
-        shape: {
-          type: "circle"
-        },
-        size: {
-          value: { min: 1, max: 3 },
-          animation: {
-            enable: true,
-            speed: 4,
-            minimumValue: 0.1
-          }
-        }
-      },
-      detectRetina: true
-    });
-  </script>
 </body>
 </html>
 
-<!-- ------------------------------------------------------------------------------------------------- -->
+
